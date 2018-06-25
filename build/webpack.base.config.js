@@ -41,20 +41,23 @@ module.exports = {
         }
       },
       {
-        test: /\.styl(us)?$/,
-        use: isProd
+        test: /\.css$/,
+        use: isProd 
           ? ExtractTextPlugin.extract({
-              use: [
-                {
-                  loader: 'css-loader',
-                  options: { minimize: true }
-                },
-                'stylus-loader'
-              ],
-              fallback: 'vue-style-loader'
-            })
-          : ['vue-style-loader', 'css-loader', 'stylus-loader']
+            fallback:"vue-style-loader",
+            use: ['css-loader']
+          })
+          : ['vue-style-loader', 'css-loader']
       },
+      {
+        test: /\.less$/,
+        use: isProd 
+          ? ExtractTextPlugin.extract({
+            fallback:"vue-style-loader",
+            use: ['css-loader', 'less-loader']
+          })
+          : ['vue-style-loader', 'css-loader', 'less-loader']
+      }
     ]
   },
   performance: {
@@ -68,9 +71,7 @@ module.exports = {
     ? [
         new VueLoaderPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
-        new ExtractTextPlugin({
-          filename: 'common.[chunkhash].css'
-        }),
+        new ExtractTextPlugin('style.[chunkhash].css'),
         // new webpack.DefinePlugin({
         //   "process.env.VUE_ENV": require('../src/title-mixin')
         // })

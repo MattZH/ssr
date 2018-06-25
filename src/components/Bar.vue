@@ -2,6 +2,7 @@
   <div>
     {{msg}}
     {{ $t('test') }}
+    <div class="title">123</div>
     <button @click="changeLocale">切换语言</button>
   </div>
 </template>

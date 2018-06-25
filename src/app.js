@@ -5,6 +5,8 @@ import { createStore } from './store'
 import { createi18n } from './i18n'
 import { sync } from 'vuex-router-sync'
 
+import "./assets/style/main.less";
+
 // 导出一个工厂函数，用于创建新的
 // 应用程序、router 和 store 实例
 export function createApp() {
