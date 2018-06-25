@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="sendRequest">发送请求12</button>
+    <button @click="sendRequest">发送请求122323</button>
   </div>
 </template>
 

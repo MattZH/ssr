@@ -10,30 +10,38 @@ module.exports = merge(baseConfig, {
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: './dist/'
+    publicPath: '/dist/',
+    filename: '[name].[chunkhash].js'
   },
   optimization: {
-    runtimeChunk: {
-        name: "manifest"
-    },
     splitChunks: {
-        cacheGroups: {
-            commons: {
-                test: /[\\/]node_modules[\\/]/,
-                name: "vendor",
-                chunks: "all"
-            }
-        }
-    }
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: module => module.nameForCondition &&
+            /\.(css|s[ac]ss)$/.test(module.nameForCondition()) &&
+            !/^javascript/.test(module.type),
+          chunks: 'all',
+          enforce: true,
+        },
+        vendors: {
+          test: chunk => (
+            chunk.resource &&
+            /\.js$/.test(chunk.resource) &&
+            /node_modules/.test(chunk.resource)
+          ),
+          chunks: 'initial',
+          name: 'vendors',
+        },
+      }
+    },
+    runtimeChunk: { name: 'manifest' }
   },
   plugins: [
-    // 重要信息：这将 webpack 运行时分离到一个引导 chunk 中，
-    // 以便可以在之后正确注入异步 chunk。
-    // 这也为你的 应用程序/vendor 代码提供了更好的缓存。
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: "manifest",
-    //   minChunks: Infinity
-    // }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.VUE_ENV': '"server"'
+    }),
     // 此插件在输出目录中
     // 生成 `vue-ssr-client-manifest.json`。
     new VueSSRClientPlugin()

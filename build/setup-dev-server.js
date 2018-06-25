@@ -12,7 +12,7 @@ const readFile = (fs, file) => {
   } catch (e) {}
 }
 
-module.exports = function setupDevServer (server, templatePath, cb) {
+module.exports = function setupDevServer (app, templatePath, cb) {
   let bundle
   let template
   let clientManifest
@@ -47,11 +47,12 @@ module.exports = function setupDevServer (server, templatePath, cb) {
 
   // dev middleware
   const clientCompiler = webpack(clientConfig)
+  console.log(clientConfig.output)
   const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     noInfo: true
   })
-  server.use(devMiddleware)
+  app.use(devMiddleware)
   clientCompiler.plugin('done', stats => {
     stats = stats.toJson()
     stats.errors.forEach(err => console.error(err))
@@ -65,7 +66,7 @@ module.exports = function setupDevServer (server, templatePath, cb) {
   })
 
   // hot middleware
-  server.use(require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 }))
+  app.use(require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 }))
 
   // watch and update server renderer
   const serverCompiler = webpack(serverConfig)
