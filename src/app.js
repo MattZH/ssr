@@ -4,6 +4,7 @@ import { createRouter } from './router'
 import { createStore } from './store'
 import { createi18n } from './i18n'
 import { sync } from 'vuex-router-sync'
+import meta from 'vue-meta'
 
 import "./assets/style/main.less";
 

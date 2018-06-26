@@ -87,9 +87,10 @@ function render (req, res) {
   }
 
   const context = {
-    title: 'Vue HN 2.0', // default title
+    // title: '', // default title
     url: req.url
   }
+  const bodyOpt = { body: true }
   renderer.renderToString(context, (err, html) => {
     if (err) {
       return handleError(err)

@@ -71,10 +71,7 @@ module.exports = {
     ? [
         new VueLoaderPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
-        new ExtractTextPlugin('style.[chunkhash].css'),
-        // new webpack.DefinePlugin({
-        //   "process.env.VUE_ENV": require('../src/title-mixin')
-        // })
+        new ExtractTextPlugin('style.[chunkhash].css')
       ]
     : [
         new VueLoaderPlugin(),

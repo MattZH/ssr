@@ -1,6 +1,7 @@
 <template>
   <div>
     <button @click="sendRequest">发送请求122323</button>
+    <router-link to="/">去首页</router-link>
   </div>
 </template>
 

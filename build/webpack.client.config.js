@@ -40,7 +40,7 @@ module.exports = merge(baseConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      'process.env.VUE_ENV': '"server"'
+      'process.env.VUE_ENV': '"server"',
     }),
     // 此插件在输出目录中
     // 生成 `vue-ssr-client-manifest.json`。
